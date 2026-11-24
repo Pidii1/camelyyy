@@ -56,7 +56,7 @@ svg.i { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-widt
 .vf .tag { padding: 5px 9px; border-radius: 10px; background: rgba(0,0,0,.5); font-family: var(--mono); font-size: 11px; backdrop-filter: blur(6px); border: 0; color: var(--cream); }
 .vf .tag.hot { background: var(--nude); color: var(--ink); }
 .vf .grid { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to right, transparent 33.1%, rgba(255,255,255,.35) 33.3%, transparent 33.5%, transparent 66.4%, rgba(255,255,255,.35) 66.6%, transparent 66.8%), linear-gradient(to bottom, transparent 33.1%, rgba(255,255,255,.35) 33.3%, transparent 33.5%, transparent 66.4%, rgba(255,255,255,.35) 66.6%, transparent 66.8%); }
-.vf .ghost { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; mix-blend-mode: screen; opacity: .45; pointer-events: none; animation: breathe 3s ease-in-out infinite; }
+.vf .ghost:not(.btn) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; mix-blend-mode: screen; opacity: .45; pointer-events: none; animation: breathe 3s ease-in-out infinite; }
 @keyframes breathe { 0%, 100% { opacity: .3; } 50% { opacity: .55; } }
 .vf .count { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-style: italic; font-size: 130px; color: rgba(246,236,225,.95); text-shadow: 0 8px 30px rgba(0,0,0,.5); pointer-events: none; }
 .vf .count.pop { animation: pop .9s ease; }
@@ -247,3 +247,14 @@ input[type=range]::-moz-range-thumb { width: 22px; height: 22px; border-radius: 
 .etools { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 10px 16px; }
 .etools .act { min-height: 58px; }
 .ccard .vid.both { background: var(--caramel); color: #22160f; }
+
+/* 1.2.2 tidy: side columns keep their natural height (category chips were squashed), message buttons sit side by side */
+.scr.cam > .side > * { flex-shrink: 0; }
+.side.l .brand { padding: 0 2px 2px; }
+.side.l .chips { padding: 2px 0 4px; }
+.vf .msg .row { width: min(320px, 100%); }
+.vf .msg .btn { min-height: 46px; font-size: 14.5px; }
+.side.l .chips { flex-wrap: wrap; overflow: visible; }
+.thumb { background: var(--panel); position: relative; }
+.thumb img:not([src]) { visibility: hidden; }
+.thumb:has(img:not([src]))::after { content: ""; position: absolute; inset: 0; margin: auto; width: 20px; height: 20px; border-radius: 6px; border: 2px dashed rgba(246,236,225,.25); }

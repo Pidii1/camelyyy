@@ -1,14 +1,15 @@
 {
-  "version": "1.2.1",
+  "version": "1.2.2",
   "notes": [
+    "Check for updates in Settings (Android and Windows apps)",
+    "Cleaner Settings icon and hover labels on computers",
+    "Camera type chips on the left are no longer cut off",
+    "Try again / Import buttons fixed when the camera is blocked",
     "Real photos for the 9 newest cameras",
     "9 new cameras: Original, Collage 4, Booth 4, Mini Instant, Pola 600, Toy 120, 67 Pro, Wide 22, Pocket 28 (41 in total)",
     "Photobooth strip and 2x2 collage cameras",
-    "Some cameras now shoot photos AND videos",
-    "Wide fisheye lens and a slide mount for SLIDE 100",
-    "Full-resolution photos from the camera sensor, tap to focus, real zoom and LED flash",
-    "New Edit: crop, rotate, flip and change the shape of any photo"
+    "Some cameras now shoot photos AND videos"
   ],
-  "android": "camelyyy-1_2_1.apk",
+  "android": "camelyyy-1_2_2.apk",
   "windows": "https://github.com/Pidii1/camelyyy/releases/latest/download/camelyyy-Setup.msi"
 }

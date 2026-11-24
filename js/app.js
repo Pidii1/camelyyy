@@ -5,7 +5,7 @@ import { developOne, frame, halfFrame, toyGif, blendDouble, stampText, drawStamp
 import { Roll, Settings } from './store.js';
 import * as N from './native.js';
 
-export const VERSION = '1.2.1';
+export const VERSION = '1.2.2';
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -20,7 +20,7 @@ const P = {
   lens: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><path d="M12 4v4M18 9l-3 2"/>', back: '<path d="M15 5l-7 7 7 7"/>', x: '<path d="M6 6l12 12M18 6L6 18"/>',
   star: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>', download: '<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>', share: '<path d="M12 15V4M8 8l4-4 4 4M5 13v7h14v-7"/>',
   trash: '<path d="M5 7h14M9 7V4h6v3M7 7l1 13h8l1-13"/>', image: '<rect x="4" y="5" width="16" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M20 16l-5-5-8 8"/>',
-  settings: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/>', check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  settings: '<path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>', check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
   video: '<rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/>', dev: '<path d="M6 3h12v4l-4 4v10h-4V11L6 7z"/>', all: '<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>',
   crop: '<path d="M7 3v14h14M3 7h14v14"/>', rotate: '<path d="M4 12a8 8 0 1 0 3-6.2"/><path d="M4 4v5h5"/>', mirror: '<path d="M12 3v18"/><path d="M8 7l-5 5 5 5V7zM16 7l5 5-5 5V7z"/>',
   roll: '<rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 9h16M8 5v4M16 5v4"/>', prev: '<path d="M15 5l-7 7 7 7"/>', next: '<path d="M9 5l7 7-7 7"/>', play: '<path d="M8 5v14l11-7z"/>',
@@ -771,7 +771,7 @@ SCREENS.settings = () => {
   <label class="lbl" for="cdate">Custom date (leave empty for today)</label><div class="chips" style="margin-bottom:8px">${[['', 'Today'], ...[1985, 1992, 1998, 2003, 2008].map((y) => { const t = new Date(); return [`${y}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`, `'${String(y).slice(2)}`]; })].map(([v, l]) => `<button class="chip" data-cd="${v}" aria-pressed="${s.customDate === v}">${l}</button>`).join('')}</div><input id="cdate" class="tin" type="date" value="${esc(s.customDate)}"></div>
   <div class="card"><h3>Saving</h3><div class="chips">${[['standard', 'Standard'], ['high', 'High'], ['max', 'Max']].map(([k, l]) => `<button class="chip" data-q="${k}" aria-pressed="${s.quality === k}">${l}</button>`).join('')}</div>${app0 ? tog('saveToPhone', 'Save to phone gallery', 'Every shot also goes to the camelyyy album', s.saveToPhone) : '<p>On the website, tap Save on a photo to download it.</p>'}</div>
   <div class="card"><h3>Favourite cameras</h3><p>The 4 cameras under the shutter. Long-press a camera in All cameras to change them.</p><div class="camrow" style="padding:0">${s.favs.map((id) => { const c = camById(id); return `<button aria-label="${esc(c.name)}">${camSVG(c, 46)}<span>${esc(c.name)}</span></button>`; }).join('')}</div></div>
-  ${app0 ? `<div class="card"><h3>Updates</h3><p>camelyyy checks its website for a newer version.</p><input class="tin" id="site" placeholder="${esc(N.DEFAULT_SITE)}" value="${esc(s.site)}" aria-label="camelyyy website"><div class="row"><button class="btn ghost" id="siteSave">Save website</button><button class="btn" id="upd">Check now</button></div></div>` : ''}
+  ${app0 ? `<div class="card"><h3>Updates</h3><p>camelyyy checks its website for a newer version.</p><input class="tin" id="site" placeholder="${esc(N.DEFAULT_SITE)}" value="${esc(s.site)}" aria-label="camelyyy website"><div class="row"><button class="btn ghost" id="siteSave">Save website</button><button class="btn" id="upd">Check now</button></div></div>` : `<div class="card"><h3>Updates</h3><p>The website is always the newest version. In the Android and Windows apps, Check for updates is here.</p></div>`}
   <div class="card"><h3>Privacy</h3><p>Your photos and videos stay on this device. camelyyy has no account and no ads, and never uploads your pictures.</p></div>
   <p class="lbl" style="text-align:center">camelyyy ${VERSION} · ${N.platformName()}</p></div></div></section>`;
   $$('[data-tog]').forEach((b) => (b.onclick = () => { const k = b.dataset.tog, v = !Settings.get()[k]; Settings.set({ [k]: v }); b.setAttribute('aria-checked', String(v)); if (k === 'grid') S.grid = v; }));
@@ -799,6 +799,7 @@ function updateDialog(j) {
 
 // ---------------- start ----------------
 function start() {
+  document.addEventListener('mouseover', (e) => { const b = e.target.closest && e.target.closest('button[aria-label]:not([title])'); if (b) b.title = b.getAttribute('aria-label'); });
   document.addEventListener('keydown', (e) => { if (e.key === ' ' && S.stack.length && S.stack[S.stack.length - 1][0] === 'camera' && !e.target.matches('input')) { e.preventDefault(); shoot(); } if (e.key === 'Escape' && S.sheet) closeSheet(); });
   document.addEventListener('visibilitychange', () => { if (!S.stack.length || S.stack[S.stack.length - 1][0] !== 'camera') return; if (document.hidden) { if (S.rec) stopRec(); S.tok++; stopLoop(); stopCamera(); } else show(); });
   N.onBack(() => back());
